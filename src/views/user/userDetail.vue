@@ -117,6 +117,13 @@
                 axios.get('/admin/Staff/Detail?user_id='+user_id)
                         .then(response => {
                             _this.info = response.data.data.user_info;
+                            _this.be_write_users = response.data.data.be_write_users||[]
+                            _this.be_read_users = response.data.data.be_read_users||[]
+                            _this.write_rights = response.data.data.write_rights.write_users||[]
+                            _this.read_rights = response.data.data.read_rights.read_users||[]
+                            _this.write_rights_num = _this.write_rights.length
+                            _this.read_rights_num = _this.read_rights.length
+//                            _this.editUserRight= "/123"
                             if(response.data.data.write_rights.write_users.length==0){
                                 //无权限
                             }else{
@@ -124,14 +131,6 @@
                                 _this.hasRight = false;
                                 _this.editUserRight="/editRight?user_id="+_this.$route.query.user_id+"&user_name="+response.data.data.user_info.Name;
                             }
-
-                            _this.be_write_users = response.data.data.be_write_users
-                            _this.be_read_users = response.data.data.be_read_users
-                            _this.write_rights = response.data.data.write_rights.write_users
-                            _this.read_rights = response.data.data.read_rights.read_users
-                            _this.write_rights_num = _this.write_rights.length
-                            _this.read_rights_num = _this.read_rights.length
-//                            _this.editUserRight= "/123"
 
 
                 })

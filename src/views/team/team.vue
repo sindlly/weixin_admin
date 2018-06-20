@@ -173,8 +173,9 @@
                             if(response.data.code == 0){
                                 _this.getTeam();
                                 _this.delete_id = 0;
+                                _this.$Message.success('删除成功!');
                             }else{
-
+                                _this.$Message.warning(response.data.msg);
                             }
                         })
                         .catch(err => {
