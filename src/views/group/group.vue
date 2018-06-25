@@ -225,7 +225,7 @@
                                 if(response.data.code == 0){
                                     _this.modal = false;
                                     _this.getDepart();
-                                    this.$Message.info("修改成功");
+                                    this.$Message.info("新建成功");
                                 }else{
                                     this.$Message.error(response.data.msg);
                                 }
@@ -252,6 +252,7 @@
                             if(response.data.code == 0){
                                 _this.getDepart();
                                 _this.delete_id = 0;
+                                _this.$Message.success("删除成功");
                             }else{
                                 _this.$Message.error(response.data.msg);
                             }

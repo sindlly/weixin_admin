@@ -171,7 +171,7 @@
                 if(this.r_staffList.length == 0){
                     return true
                 }else return false
-            }
+            },
         },
         mounted(){
             this.getRights();
@@ -219,18 +219,24 @@
             getTeamsList:function (e) {
                 this.w_department_name = e.label
                 this.getTeamById(e.value,"write")
+
             },
             r_getTeamsList:function (e) {
                 this.r_department_name = e.label
                 this.getTeamById(e.value,"read")
             },
             getStaffList:function (e) {
-                this.w_team_name = e.label
-                this.getStaffById(this.w_department_id,this.w_team_id,"write");
+                if(e.value){
+                    this.w_team_name = e.label
+                    this.getStaffById(this.w_department_id,this.w_team_id,"write");
+                }
+
             },
             r_getStaffList:function (e) {
-                this.r_team_name = e.label
-                this.getStaffById(this.r_department_id,this.r_team_id,"read");
+                if(e.value){
+                    this.r_team_name = e.label
+                    this.getStaffById(this.r_department_id,this.r_team_id,"read");
+                }
             },
             getUserName:function (e) {
                 this.w_user_name = e.label.split("-")[0]
@@ -241,18 +247,40 @@
                         .then(response => {
                             var data = response.data.data
                             var temp = []
-                            for(var i in data){
-                                temp[i] = {
-                                    value: data[i].Team_id,
-                                    label:data[i].Team_name
+                            if(data.length != 0){
+                                console.log("len"+data.length)
+                                for(var i in data){
+                                    temp[i] = {
+                                        value: data[i].Team_id,
+                                        label:data[i].Team_name
+                                    }
+                                }
+                                if(writeOrread == "write"){
+                                    _this.w_teamList = temp
+                                }else{
+                                    _this.r_teamList = temp
+                                }
+                            }else {
+                                if(writeOrread == "write"){
+                                    _this.w_teamList = [{
+                                        value:'',
+                                        label:'暂无团队'
+                                    }]
+                                    _this.w_staffList=[{
+                                        value:'',
+                                        label:'暂无个人'
+                                    }]
+                                }else{
+                                    _this.r_teamList = [{
+                                        value:'',
+                                        label:'暂无团队'
+                                    }]
+                                    _this.r_staffList=[{
+                                        value:'',
+                                        label:'暂无个人'
+                                    }]
                                 }
                             }
-                            if(writeOrread == "write"){
-                                _this.w_teamList = temp
-                            }else{
-                                _this.r_teamList = temp
-                            }
-
                         })
                         .catch(err => {
                             return err
@@ -276,9 +304,9 @@
                                 }
                             }
                             if(writeOrread == "write"){
-                                _this.w_staffList = temp
+                                _this.w_staffList = temp||[]
                             }else{
-                                _this.r_staffList = temp
+                                _this.r_staffList = temp||[]
                             }
 
                         })
