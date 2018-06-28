@@ -49,6 +49,8 @@
 
 <script type="text/ecmascript-6">
     import axios from 'axios';
+//    const ROOTPATH='/jixiao' //线上、开发
+//    //const ROOTPATH='' //测试
     export default{
         data(){
             return {
@@ -123,7 +125,7 @@
         methods: {
             getDepartmentList:function () {
                 var _this = this;
-                axios.get('/admin/Department/GetDepartments')
+                axios.get(ROOTPATH+'/admin/Department/GetDepartments')
                         .then(response => {
                             var data = response.data.data
                             var temp = []
@@ -141,7 +143,7 @@
             },
             getTeamList:function (id) {
                 var _this = this;
-                axios.get('/admin/Team/GetTeamByDepartment',{
+                axios.get(ROOTPATH+'/admin/Team/GetTeamByDepartment',{
                     params:{
                         department_id:id
                     }
@@ -169,7 +171,7 @@
             },
             getUserInfo:function (user_id) {
                 var _this = this;
-                axios.get('/admin/Staff/Detail?user_id='+user_id)
+                axios.get(ROOTPATH+'/admin/Staff/Detail?user_id='+user_id)
                         .then(response => {
                             var info = response.data.data.user_info
                             this.formValidate.name = info.Name
@@ -199,7 +201,7 @@
                 this.$refs[name].validate((valid) => {
                     if (valid) {
                         var _this = this;
-                        axios.get(url,{
+                        axios.get(ROOTPATH+url,{
                             params:_this.formValidate
                         }).then(response => {
                                     this.$Message.success(response.data.msg);

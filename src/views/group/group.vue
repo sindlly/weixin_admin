@@ -48,6 +48,8 @@
 
 <script type="text/ecmascript-6">
     import axios from 'axios';
+//    const ROOTPATH='/jixiao' //线上、开发
+//    //const ROOTPATH='' //测试
     export default{
         data(){
             return {
@@ -144,7 +146,7 @@
             getDepart:function () {
                 var _this = this;
                 this.loading = true
-                axios.get('/admin/Department/Get',{params:{
+                axios.get(ROOTPATH+'/admin/Department/Get',{params:{
                     keyword:_this.searchData,
                 }})
                 .then(response => {
@@ -194,7 +196,7 @@
                         },20)
                     }else{
                         url = "/admin/Department/Edit"
-                        axios.get(url,{params:{
+                        axios.get(ROOTPATH+url,{params:{
                                     department_name:_this.department_name,
                                     department_id:_this.department_id
                                 }})
@@ -215,7 +217,7 @@
                     }
                 }else{
                     url = "/admin/Department/Add"
-                    axios.get(url,{params:{
+                    axios.get(ROOTPATH+url,{params:{
                                 department_name:_this.department_name,
                                 department_id:_this.department_id
                             }})
@@ -244,7 +246,7 @@
             },
             j_delete:function () {
                 var _this = this;
-                axios.get("/admin/Department/Delete",{params:{
+                axios.get(ROOTPATH+"/admin/Department/Delete",{params:{
                             department_id: _this.delete_id
                         }})
                         .then(response => {

@@ -23,13 +23,15 @@ import store from '../store';
 //         return Promise.reject(err);
 //     }
 // )
-
+// const ROOTPATH='/jixiao' //线上、开发
+//const ROOTPATH='' //测试
 export default {
     /**
      * 请求例子
      */
+    
     login: function (params) {
-        return axios.get('/admin/Login/Post', {
+        return axios.get(ROOTPATH+'/admin/Login/Post', {
             params:params
         }).then(response => {
                 return response
@@ -39,7 +41,7 @@ export default {
             });
     },
     getDashboard:function () {
-        return axios.get('/admin/Home/Get')
+        return axios.get(ROOTPATH+"/admin/Home/Get")
             .then(response => {
                 return response
             })

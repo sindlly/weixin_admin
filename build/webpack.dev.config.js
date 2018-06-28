@@ -21,12 +21,12 @@ module.exports = merge(webpackBaseConfig, {
     },
     devServer:{
         proxy: {
-            '/admin': {
+            '/jixiao/admin': {
                 target:'http://www.wechat.com',
                 changeOrigin: true,
-                // pathRewrite: {
-                //     '^/admin': '',
-                // }
+                pathRewrite: {
+                    '/jixiao/admin': '/admin',
+                }
             }
         },  
     },

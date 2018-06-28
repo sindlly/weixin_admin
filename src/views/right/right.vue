@@ -72,6 +72,8 @@
 
 <script type="text/ecmascript-6">
     import axios from 'axios';
+//    const ROOTPATH='/jixiao' //线上、开发
+//    //const ROOTPATH='' //测试
     export default{
         data(){
             return {
@@ -184,7 +186,7 @@
         methods: {
             getDepartmentList:function () {
                 var _this = this;
-                axios.get('/admin/Department/GetDepartments')
+                axios.get(ROOTPATH+'/admin/Department/GetDepartments')
                         .then(response => {
                             var data = response.data.data
                             var temp = []
@@ -204,7 +206,7 @@
             getTeamList:function (id) {
                 var _this = this;
                 this.department_id = id
-                axios.get('/admin/Team/GetTeamByDepartment',{
+                axios.get(ROOTPATH+'/admin/Team/GetTeamByDepartment',{
                     params:{
                         department_id:id
                     }
@@ -226,7 +228,7 @@
             },
             getStaffs:function (id) {
                 var _this = this;
-                axios.get('/admin/Staff/GetStaffs',{
+                axios.get(ROOTPATH+'/admin/Staff/GetStaffs',{
                     params:{
                         department_id:_this.department_id,
                         team_id:id
@@ -253,7 +255,7 @@
             getUserList:function (pageNo) {
                 var _this = this;
                 this.loading = true
-                axios.get('/admin/Rights/Get',{
+                axios.get(ROOTPATH+'/admin/Rights/Get',{
                     params:{
                         page:pageNo,
                         company_card_no:_this.company_card_no,
@@ -292,7 +294,7 @@
             },
             j_delete:function () {
                 var _this = this;
-                axios.get('/admin/Rights/Del',{
+                axios.get(ROOTPATH+'/admin/Rights/Del',{
                     params:{
                         user_id:_this.delete_id
                     }
@@ -326,7 +328,7 @@
             },
             j_newRight:function () {
                 var _this = this;
-                axios.get('/admin/Rights/Add',{
+                axios.get(ROOTPATH+'/admin/Rights/Add',{
                     params:{
                         user_id:_this.newRightUserId
                     }

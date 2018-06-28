@@ -111,6 +111,7 @@
                 <!--<Button type="primary" long class="submit" @click="r_submit">提交</Button>-->
             </div>
         </div>
+        <div class="tips">(注：如选择了一个部门或团队，则表示对整个部门或团队内的所有人拥有权限)</div>
         <hr>
         <div style="text-align: center">
             <Button type="primary"  class="submit" @click="submit">提交</Button>
@@ -121,6 +122,8 @@
 
 <script type="text/ecmascript-6">
     import axios from 'axios';
+//    const ROOTPATH='/jixiao' //线上、开发
+//    //const ROOTPATH='' //测试
     export default{
         data(){
             return {
@@ -181,7 +184,7 @@
         methods: {
             getRights:function () {
                 var _this = this;
-                axios.get('/admin/Rights/GetRights',{
+                axios.get(ROOTPATH+'/admin/Rights/GetRights',{
                     params:{
                         user_id: _this.$route.query.user_id
                     }
@@ -199,7 +202,7 @@
             },
             getDepartmentList:function () {
                 var _this = this;
-                axios.get('/admin/Department/GetDepartments')
+                axios.get(ROOTPATH+'/admin/Department/GetDepartments')
                         .then(response => {
                             var data = response.data.data
                             var temp = []
@@ -243,7 +246,7 @@
             },
             getTeamById:function (id,writeOrread) {
                 var _this = this;
-                axios.get('/admin/Team/GetTeamByDepartment?department_id='+id)
+                axios.get(ROOTPATH+'/admin/Team/GetTeamByDepartment?department_id='+id)
                         .then(response => {
                             var data = response.data.data
                             var temp = []
@@ -288,7 +291,7 @@
             },
             getStaffById:function (department_id,team_id,writeOrread) {
                 var _this = this;
-                axios.get('/admin/Staff/GetStaffs',{
+                axios.get(ROOTPATH+'/admin/Staff/GetStaffs',{
                     params:{
                         department_id:department_id,
                         team_id:team_id
@@ -421,7 +424,7 @@
                 for(var i in this.write_users){
                     write_ids[i] = this.write_users[i].user_id
                 }
-                axios.get('/admin/Rights/SetRights',{
+                axios.get(ROOTPATH+'/admin/Rights/SetRights',{
                     params:{
                         user_id: _this.$route.query.user_id,
                         write_department_ids:write_department_ids.join(","),
@@ -561,7 +564,7 @@
                 for(var i in this.read_users){
                     read_ids[i] = this.read_users[i].user_id
                 }
-                axios.get('/admin/Rights/SetRights',{
+                axios.get(ROOTPATH+'/admin/Rights/SetRights',{
                     params:{
                         user_id: _this.$route.query.user_id,
                         write_department_ids:write_department_ids.join(","),
@@ -595,8 +598,8 @@
     .content{
         width: 100%;
         height: 100%;
-        margin:20px auto;
-        padding-bottom: 70px;
+        margin:20px auto 0;
+        /*padding-bottom: 70px;*/
         display: flex;
         justify-content: space-around;
     }
@@ -625,7 +628,7 @@
     }
     .display-area{
         width: 420px;
-        height: 400px;
+        height: 300px;
         padding: 5px;
         overflow-y: auto;
         /*max-height: 500px;*/
@@ -659,6 +662,9 @@
         width: 120px;
         margin: 20px 0;
         line-height: 30px;
+    }
+    .tips{
+        padding-left: 40px
     }
 
 </style>

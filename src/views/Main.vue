@@ -49,6 +49,8 @@
 import Cookies from 'js-cookie';
 import shrinkableMenu from './main-components/shrinkable-menu/shrinkable-menu.vue';
 import axios from 'axios';
+//const ROOTPATH='/jixiao' //线上、开发
+////const ROOTPATH='' //测试
 export default {
     components: {
         shrinkableMenu
@@ -80,7 +82,7 @@ export default {
         },
         handleClickUserDropdown (name) {
             var _this = this;
-            axios.get('/admin/Logout/Get')
+            axios.get(ROOTPATH+'/admin/Logout/Get')
                     .then(response => {
                         if(response.data.code==0){
                             _this.$router.push({

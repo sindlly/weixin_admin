@@ -83,6 +83,10 @@ module.exports = {
             threadPool: happyThreadPool,
             cache: true,
             verbose: true
+        }),
+        new webpack.DefinePlugin({
+            ROOTPATH : "'/jixiao'"   //设置全局变量（开发和线上）
+            // ROOTPATH : "''"   //设置全局变量（测试）
         })
     ],
     resolve: {

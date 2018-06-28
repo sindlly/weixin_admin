@@ -34,6 +34,8 @@
 
 <script type="text/ecmascript-6">
     import axios from 'axios';
+//    const ROOTPATH='/jixiao' //线上、开发
+//    //const ROOTPATH='' //测试
     export default{
         data(){
             return {
@@ -108,7 +110,7 @@
             getTeam:function (pageNo) {
                 var _this = this;
                 this.loading = true
-                axios.get('/admin/Team/Get',{params:{
+                axios.get(ROOTPATH+'/admin/Team/Get',{params:{
                             team_keyword:_this.searchData,
                             department_id:_this.$route.params.id,
                             page:pageNo
@@ -140,7 +142,7 @@
                 }else{
                     url = "/admin/Team/Add"
                 }
-                axios.get(url,{params:{
+                axios.get(ROOTPATH+url,{params:{
                             team_name:_this.team_name,
                             team_id:_this.team_id,
                             department_id:_this.department_id
@@ -165,7 +167,7 @@
             },
             j_delete:function () {
                 var _this = this;
-                axios.get("/admin/Team/Delete",{params:{
+                axios.get(ROOTPATH+"/admin/Team/Delete",{params:{
                             team_id: _this.delete_id
                         }})
                         .then(response => {

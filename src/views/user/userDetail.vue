@@ -53,7 +53,15 @@
                     <div class="right-title">该员工可以被下列人员考核:</div>
                     <div class="user-area">
                         <div class="user" v-for="item in be_write_users">
-                            {{item.Department_name}}—{{item.Team_name}}—{{item.Name}}
+                            <span class="department-name">
+                                {{item.Department_name}}
+                            </span>-
+                            <span class="team-name">
+                                {{item.Team_name}}
+                            </span>-
+                            <span class="user-name">
+                                {{item.Name}}
+                            </span>
                         </div>
                     </div>
 
@@ -62,7 +70,15 @@
                     <div class="right-title">该员工可以被下列人员查看:</div>
                     <div class="user-area">
                         <div class="user" v-for="item in be_read_users">
-                            {{item.Department_name}}—{{item.Team_name}}—{{item.Name}}
+                            <span class="department-name">
+                                {{item.Department_name}}
+                            </span>-
+                            <span class="team-name">
+                                {{item.Team_name}}
+                            </span>-
+                            <span class="user-name">
+                                {{item.Name}}
+                            </span>
                         </div>
                     </div>
                 </div>
@@ -72,7 +88,15 @@
                     <div class="right-title">该员工可以考核的人(共{{write_rights_num}}人):</div>
                     <div class="user-area">
                         <div class="user" v-for="item in write_rights">
-                            {{item.department_name}}—{{item.team_name}}—{{item.name}}
+                            <span class="department-name">
+                                {{item.department_name}}
+                            </span>-
+                            <span class="team-name">
+                                {{item.team_name}}
+                            </span>-
+                            <span class="user-name">
+                                {{item.name}}
+                            </span>
                         </div>
                     </div>
 
@@ -81,7 +105,15 @@
                     <div class="right-title">该员工可以查看的人(共{{read_rights_num}}人):</div>
                     <div class="user-area">
                         <div class="user" v-for="item in read_rights">
-                            {{item.department_name}}—{{item.team_name}}—{{item.name}}
+                            <span class="department-name">
+                                {{item.department_name}}
+                            </span>-
+                            <span class="team-name">
+                                {{item.team_name}}
+                            </span>-
+                            <span class="user-name">
+                                {{item.name}}
+                            </span>
                         </div>
                     </div>
                 </div>
@@ -92,6 +124,8 @@
 
 <script type="text/ecmascript-6">
     import axios from 'axios';
+//    const ROOTPATH='/jixiao' //线上、开发
+//    //const ROOTPATH='' //测试
     export default{
         data(){
             return {
@@ -114,7 +148,7 @@
         methods: {
             getUserInfo:function (user_id) {
                 var _this = this;
-                axios.get('/admin/Staff/Detail?user_id='+user_id)
+                axios.get(ROOTPATH+'/admin/Staff/Detail?user_id='+user_id)
                         .then(response => {
                             _this.info = response.data.data.user_info;
                             _this.be_write_users = response.data.data.be_write_users||[]
@@ -179,24 +213,35 @@
     .right-area{
         display: flex;
         flex-direction: row;
-        justify-content: space-around;
+        /*justify-content: space-around;*/
         margin-top: 20px;
     }
     .right-item{
         width: 40%;
-
+        margin-right: 100px;
     }
     .user-area{
         min-height: 100px;
         max-height: 300px;
         background: #f7f7f7;
         overflow-y:auto;
+        padding: 5px 0;
     }
     .right-title{
         font-size: 16px;
+        margin-bottom: 5px;
     }
     .user{
         line-height: 25px;
         font-size: 14px;
+    }
+    .user-name{
+        color: #57a3f3;
+    }
+    .team-name{
+        color: #24bc9a;
+    }
+    .department-name{
+        color: #f5a623;
     }
 </style>

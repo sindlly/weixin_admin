@@ -60,6 +60,8 @@
 
 <script type="text/ecmascript-6">
     import axios from 'axios';
+//    const ROOTPATH='/jixiao' //线上、开发
+//    //const ROOTPATH='' //测试
     export default{
         data(){
             return {
@@ -187,7 +189,7 @@
         methods: {
             getDepartmentList:function () {
                 var _this = this;
-                axios.get('/admin/Department/GetDepartments')
+                axios.get(ROOTPATH+'/admin/Department/GetDepartments')
                    .then(response => {
                        var data = response.data.data
                        var temp = []
@@ -207,7 +209,7 @@
             getUserList:function (pageNo) {
                 var _this = this;
                 this.loading = true
-                axios.get('/admin/Staff/Get',{
+                axios.get(ROOTPATH+'/admin/Staff/Get',{
                     params:{
                         page:pageNo,
                         company_card_no:_this.company_card_no,
@@ -247,7 +249,7 @@
             },
             j_delete:function () {
                 var _this = this;
-                axios.get('/admin/Staff/DelOrOutset',{
+                axios.get(ROOTPATH+'/admin/Staff/DelOrOutset',{
                     params:{
                         option:"del",
                         user_id:_this.delete_id
