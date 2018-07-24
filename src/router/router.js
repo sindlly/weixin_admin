@@ -73,6 +73,14 @@ export const otherRouter = [
             { path: '/', title: {i18n: 'home'}, name: 'editRight', component: resolve => { require(['@/views/right/rightTemplate.vue'], resolve); } }
         ]
     }
+    ,{
+        path: '/groupEdit',
+        name: 'groupEdit',
+        component: Main,
+        children: [
+            { path: '/', title: {i18n: 'groupEdit'}, name: 'groupEdit', component: resolve => { require(['@/views/group/groupEdit.vue'], resolve); } }
+        ]
+    }
 ];
 
 // 作为Main组件的子页面展示并且在左侧菜单显示的路由写在appRouter里

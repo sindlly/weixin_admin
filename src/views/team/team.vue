@@ -58,6 +58,10 @@
                         key: 'team_name'
                     },
                     {
+                        title: '团队人数',
+                        key: 'team_users_num'
+                    },
+                    {
                         title: '操作',
                         key: 'address',
                         render: (h, params) => {
@@ -116,7 +120,7 @@
                             page:pageNo
                         }})
                         .then(response => {
-                            _this.tableData = response.data.data.List
+                            _this.tableData = response.data.data.List||[]
                             _this.page.total = response.data.data.TotalCount
                             _this.loading = false
                         })

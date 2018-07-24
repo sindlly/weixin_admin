@@ -24,7 +24,7 @@
         <Upload
                 ref="upload"
                 name="excel_tpl"
-                action="/admin/Department/Edit"
+                action="/jixiao/admin/Department/Edit"
                 :show-upload-list = 'false'
                 :data='uploadData'
                 :before-upload="handleUpload"
@@ -43,6 +43,33 @@
             @on-cancel="j_delete_cancel">
             <p>确认删除此部门?</p>
     </Modal>
+    <Modal
+            v-model="modal_check"
+            title="上传校验"
+            @on-ok="j_check_ok">
+        <h3>系统信息与模板未匹配项:</h3>
+        <h3 style="margin: 10px 0">新增人员:</h3>
+        <div class="checkItem">
+            <div  v-for="item in new_person_list">
+                <span>{{item.company_card_no}}</span>--<span>{{item.name}}</span>--<span>{{item.team_name}}</span>
+            </div>
+        </div>
+        <br><hr>
+        <h3 style="margin: 10px 0">离岗人员:</h3>
+        <div class="checkItem">
+            <div class="checkItem" v-for="item in out_person_list">
+                <span>{{item.company_card_no}}</span>--<span>{{item.name}}</span>--<span>{{item.team_name}}</span>
+            </div>
+        </div>
+        <br><hr>
+        <h3 style="margin: 10px 0">信息不合:</h3>
+        <div class="checkItem">
+            <div v-for="item in error_person_list">
+                <span>{{item.company_card_no}}</span>--<span>{{item.name}}</span>--<span>{{item.team_name}}</span>
+            </div>
+        </div>
+
+    </Modal>
 </div>
 </template>
 
@@ -57,6 +84,7 @@
                 loading:false,
                 modal_title:"新增部门",
                 modal_delete:false,
+                modal_check:false,
                 delete_id:"",
                 searchData:'',
                 department_name:'',
@@ -87,6 +115,9 @@
                                 on:{
                                     click: ()=> {
                                         this.edit(params.row.department_id,params.row.department_name,params.row.excel_tpl_name);
+                                        /*this.$router.push({
+                                            path: "/groupEdit?" + params.row.department_id+"/"+params.row.department_name
+                                        })*/
                                     }
                                 }
                             }, '编辑'),
@@ -129,7 +160,13 @@
                 ],
                 uploadData:{},
                 file:null,
-                fileName:''
+                fileName:'',
+                new_person_num:0,
+                new_person_list:[],
+                out_person_num:0,
+                out_person_list:[],
+                error_person_num:0,
+                error_person_list:[],
             }
         },
         mounted(){
@@ -177,14 +214,17 @@
                 this.$Message.warning("仅支持.xlsx文件");
             },
             handleUploadSuccess:function (res) {
-                this.$Message.info("编辑成功");
-                this.getDepart()
+                this.modal_check = true;
+                this.new_person_list = res.data.new_users||[]
+                this.out_person_list = res.data.outset_users||[]
+                this.error_person_list = res.data.err_info_users||[]
+//                this.$Message.info("编辑成功");
+//                this.getDepart()
             },
             j_ok:function () {
                 var _this = this;
                 var url = ""
                 if(_this.department_id){
-//
                     if(_this.file){
                         var temp = {
                             department_id :this.department_id,
@@ -192,7 +232,7 @@
                         }
                         this.uploadData = temp
                         setTimeout(function () {
-                            _this.$refs.upload.post(_this.file);
+                            _this.$refs.upload.post(_this.file)
                         },20)
                     }else{
                         url = "/admin/Department/Edit"
@@ -205,8 +245,8 @@
                                     _this.department_id = "";
                                     if(response.data.code == 0){
                                         _this.modal = false;
-                                        _this.getDepart();
-                                        this.$Message.info("修改成功");
+//                                        _this.getDepart()
+//                                        this.$Message.info("修改成功");
                                     }else{
                                         this.$Message.error(response.data.msg);
                                     }
@@ -237,6 +277,11 @@
                             });
                 }
 
+            },
+            j_check_ok:function () {
+                this.modal_check = false;
+                this.getDepart();
+                this.$Message.info("修改成功");
             },
             j_cancel:function () {
                 this.department_name = "";
@@ -283,5 +328,9 @@
     }
     .table{
         margin-top: 20px;
+    }
+    .checkItem{
+        max-height: 300px;
+        overflow-y: auto;
     }
 </style>
