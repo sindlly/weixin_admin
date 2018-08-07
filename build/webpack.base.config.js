@@ -85,8 +85,8 @@ module.exports = {
             verbose: true
         }),
         new webpack.DefinePlugin({
-            // ROOTPATH : "'/jixiao'"   //设置全局变量（开发和线上） 要改三个地方（webpack.prod.config.js和文件上传那里）
-            ROOTPATH : "''"   //设置全局变量（测试）
+            ROOTPATH : "'/jixiao'"   //设置全局变量（开发和线上） 要改三个地方（webpack.prod.config.js和文件上传那里）
+            // ROOTPATH : "''"   //设置全局变量（测试）
         })
     ],
     resolve: {
